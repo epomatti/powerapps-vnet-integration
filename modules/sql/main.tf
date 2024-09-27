@@ -15,11 +15,11 @@ resource "azurerm_mssql_server" "default" {
   public_network_access_enabled = var.public_network_access_enabled
 
   # Administrator Login
-  # administrator_login          = var.admin_login
-  # administrator_login_password = var.admin_login_password
+  administrator_login          = var.admin_login
+  administrator_login_password = var.admin_login_password
 
   azuread_administrator {
-    azuread_authentication_only = true
+    azuread_authentication_only = var.azuread_authentication_only
     login_username              = data.azuread_user.current.user_principal_name
     object_id                   = data.azurerm_client_config.current.object_id
     tenant_id                   = data.azurerm_client_config.current.tenant_id

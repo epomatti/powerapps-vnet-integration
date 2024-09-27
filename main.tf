@@ -67,6 +67,7 @@ module "mssql" {
   public_network_access_enabled = var.mssql_public_network_access_enabled
   admin_login                   = var.mssql_admin_login
   admin_login_password          = var.mssql_admin_login_password
+  azuread_authentication_only   = var.mssql_azuread_authentication_only
 }
 
 module "private_link" {
@@ -87,4 +88,8 @@ module "enterprise_policy" {
   powerapps_subnet_name  = module.network.powerapps_subnet_name
   vnet2_id               = module.network.vnet2_id
   powerapps_subnet2_name = module.network.powerapps_subnet2_name
+}
+
+module "entra" {
+  source = "./modules/entra"
 }

@@ -34,6 +34,10 @@ variable "mssql_admin_login_password" {
   type = string
 }
 
+variable "mssql_azuread_authentication_only" {
+  type = bool
+}
+
 ### Power Apps ###
 variable "create_powerapps_environment" {
   type    = bool

@@ -27,6 +27,10 @@ variable "admin_login_password" {
   sensitive = true
 }
 
+variable "azuread_authentication_only" {
+  type = bool
+}
+
 variable "public_network_access_enabled" {
   type = bool
 }
