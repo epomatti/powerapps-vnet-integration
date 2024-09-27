@@ -6,6 +6,10 @@ variable "location" {
   type = string
 }
 
+variable "pair_location" {
+  type = string
+}
+
 variable "project" {
   type = string
 }

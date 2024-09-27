@@ -1,7 +1,8 @@
-location = "eastus"
-project  = "litware"
+location      = "eastus"
+pair_location = "westus"
+project       = "litware"
 
-subscription_id    = "a30b3a21-f289-48f8-b0ee-00612c350df0"
+subscription_id    = ""
 allowed_public_ips = [""]
 
 mssql_public_network_access_enabled = true
