@@ -34,6 +34,16 @@ variable "mssql_admin_login_password" {
   type = string
 }
 
+### Power Apps ###
+variable "create_powerapps_environment" {
+  type    = bool
+  default = false
+}
+
+variable "powerplatform_environment_location" {
+  type = string
+}
+
 ### Entra ID ###
 variable "entraid_tenant_domain" {
   type = string

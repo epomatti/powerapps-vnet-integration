@@ -9,14 +9,25 @@ resource "azurerm_subnet" "private_endpoints" {
   name                 = "private-endpoints"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.10.0/26"]
+  address_prefixes     = ["10.0.10.0/24"]
 }
 
 resource "azurerm_subnet" "powerapps" {
   name                 = "powerapps"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.50.0/26"]
+  address_prefixes     = ["10.0.50.0/24"]
+
+  delegation {
+    name = "Microsoft.PowerPlatform/enterprisePolicies"
+
+    service_delegation {
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+      name = "Microsoft.PowerPlatform/enterprisePolicies"
+    }
+  }
 }
 
 # resource "azurerm_network_security_group" "default" {

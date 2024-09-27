@@ -59,3 +59,26 @@ provider "registry.terraform.io/hashicorp/random" {
     "zh:eff58323099f1bd9a0bec7cb04f717e7f1b2774c7d612bf7581797e1622613a0",
   ]
 }
+
+provider "registry.terraform.io/microsoft/power-platform" {
+  version     = "3.0.0"
+  constraints = "3.0.0"
+  hashes = [
+    "h1:r+lr4aULrrF1KRP8Ie0oe0ysOoJm2ScH9XVtNh5koSY=",
+    "zh:173e011876e9dce281d6b347796dd977a80ab1b2386fd31a188bf0292aae9b0b",
+    "zh:1d9b0437059dd5583e88314471269e5deb1bd78be9250ce2515d202e96b400d4",
+    "zh:365cb6adf5f7c61d2dd135e64bce6d7d32d0f462b7683c8e149d7ba8d88bef0f",
+    "zh:4689142792a3638fc1b8e779331e1fbd9587b2b15f795ac248d3ee72221994da",
+    "zh:52497e82f3f548b7355230de2154a201b906f46709cd03524ad2ccc82742f5b7",
+    "zh:541d4532c875b2ee7ecb98da9a1461e76788893b623b0adf7c634d9fff7770e3",
+    "zh:5bb27b6fa45ea66f331e710c5849caaec511a7b360bedf50d0be5b2a3da03421",
+    "zh:744ce4de77a511528f51d34c313b814c03d6d716b86677daffd12ae5410c2e67",
+    "zh:8d2fbfb60bd1eb396d94484d542e9c6b0fb57e5e95ad42106359cb2467b703bd",
+    "zh:90ef8ebbbedbde1a2386fa48f2f2ac442c3c166f349f8be856da8303bd17eddf",
+    "zh:a00dd678df8120a0ea805b382dbd2641045f1eaeb030e273affbd3880a702593",
+    "zh:a8d0bff6ce91b8b70f6729042dbdbd8abc6712c4469a7bdf8080fb20a1264183",
+    "zh:abd5843f89488b2515d3b9dfbb6974d21576b8e20fda52c3412594972a9d5d2d",
+    "zh:d03287804bb2c2b51699f4f9d94c0c793869b140d242e6edc288a068362f166f",
+    "zh:e1362cee2b7f93828155f3c3eed4e12cb0ae8ba1bf210ceb3fec38cca34e3592",
+  ]
+}

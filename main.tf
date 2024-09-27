@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/azuread"
       version = "3.0.1"
     }
+    power-platform = {
+      source  = "microsoft/power-platform"
+      version = "3.0.0"
+    }
   }
 }
 
@@ -33,6 +37,13 @@ module "network" {
   location            = azurerm_resource_group.default.location
 }
 
+# module "nat" {
+#   source              = "./modules/nat"
+#   workload            = local.workload
+#   resource_group_name = azurerm_resource_group.default.name
+#   location            = azurerm_resource_group.default.location
+# }
+
 module "monitor" {
   source              = "./modules/monitor"
   workload            = local.workload
@@ -52,4 +63,13 @@ module "mssql" {
   public_network_access_enabled = var.mssql_public_network_access_enabled
   admin_login                   = var.mssql_admin_login
   admin_login_password          = var.mssql_admin_login_password
+}
+
+module "private_link" {
+  source                      = "./modules/private-link"
+  resource_group_name         = azurerm_resource_group.default.name
+  location                    = azurerm_resource_group.default.location
+  vnet_id                     = module.network.vnet_id
+  private_endpoints_subnet_id = module.network.private_endpoints_subnet_id
+  sql_server_id               = module.mssql.server_id
 }
