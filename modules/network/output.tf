@@ -9,3 +9,7 @@ output "private_endpoints_subnet_id" {
 output "powerapps_subnet_id" {
   value = azurerm_subnet.powerapps.id
 }
+
+output "powerapps_subnet_name" {
+  value = azurerm_subnet.powerapps.name
+}

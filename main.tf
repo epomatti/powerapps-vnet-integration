@@ -12,6 +12,10 @@ terraform {
       source  = "microsoft/power-platform"
       version = "3.0.0"
     }
+    azapi = {
+      source  = "Azure/azapi"
+      version = "1.15.0"
+    }
   }
 }
 
@@ -72,4 +76,13 @@ module "private_link" {
   vnet_id                     = module.network.vnet_id
   private_endpoints_subnet_id = module.network.private_endpoints_subnet_id
   sql_server_id               = module.mssql.server_id
+}
+
+module "enterprise_policy" {
+  source                = "./modules/policy"
+  workload              = local.workload
+  resource_group_id     = azurerm_resource_group.default.id
+  powerapps_location    = var.powerplatform_environment_location
+  vnet_id               = module.network.vnet_id
+  powerapps_subnet_name = module.network.powerapps_subnet_name
 }
