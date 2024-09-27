@@ -13,3 +13,11 @@ output "powerapps_subnet_id" {
 output "powerapps_subnet_name" {
   value = azurerm_subnet.powerapps.name
 }
+
+output "vnet2_id" {
+  value = azurerm_virtual_network.vnet2.id
+}
+
+output "powerapps_subnet2_name" {
+  value = azurerm_subnet.powerapps2.name
+}

@@ -79,10 +79,12 @@ module "private_link" {
 }
 
 module "enterprise_policy" {
-  source                = "./modules/policy"
-  workload              = local.workload
-  resource_group_id     = azurerm_resource_group.default.id
-  powerapps_location    = var.powerplatform_environment_location
-  vnet_id               = module.network.vnet_id
-  powerapps_subnet_name = module.network.powerapps_subnet_name
+  source                 = "./modules/policy"
+  workload               = local.workload
+  resource_group_id      = azurerm_resource_group.default.id
+  powerapps_location     = var.powerplatform_environment_location
+  vnet_id                = module.network.vnet_id
+  powerapps_subnet_name  = module.network.powerapps_subnet_name
+  vnet2_id               = module.network.vnet2_id
+  powerapps_subnet2_name = module.network.powerapps_subnet2_name
 }

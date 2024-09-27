@@ -30,6 +30,31 @@ resource "azurerm_subnet" "powerapps" {
   }
 }
 
+resource "azurerm_virtual_network" "vnet2" {
+  name                = "vnet2-${var.workload}"
+  address_space       = ["10.99.0.0/16"]
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_subnet" "powerapps2" {
+  name                 = "powerapps"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet2.name
+  address_prefixes     = ["10.99.50.0/24"]
+
+  delegation {
+    name = "Microsoft.PowerPlatform/enterprisePolicies"
+
+    service_delegation {
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+      name = "Microsoft.PowerPlatform/enterprisePolicies"
+    }
+  }
+}
+
 # resource "azurerm_network_security_group" "default" {
 #   name                = "nsg-${var.workload}"
 #   location            = var.location
