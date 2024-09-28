@@ -1,6 +1,8 @@
 # Power Apps VNET integration with Azure
 
-Power Apps private connection to Azure SQL Server following the VNET support [documetation][1] and the [setup guidelines][2].
+Accessing Azure SQL Server from Power Apps with [VNET support][1] without the requirement for a gateway.
+
+<img src=".docs/azure-powerapps.png" />
 
 ## Requirements
 
@@ -9,7 +11,7 @@ Power Apps private connection to Azure SQL Server following the VNET support [do
 
 Follow the steps in the [setup guidelines][2], such as registering the `Microsoft.PowerPlatform` provider.
 
-## Setup
+## Infrastructure
 
 Identify the IP address that will be administering the resources:
 
@@ -37,7 +39,14 @@ terraform init
 terraform apply -auto-approve
 ```
 
+## Setup
+
+Follow the configuration steps described at [Set up Virtual Network support for Power Platform][1].
+
+Among the required configuration steps, the [7. Set Subnet Injection for an environment][4] configuration is essential.
+
 
 [1]: https://learn.microsoft.com/en-in/power-platform/admin/vnet-support-overview
 [2]: https://learn.microsoft.com/en-in/power-platform/admin/vnet-support-setup-configure
 [3]: https://learn.microsoft.com/en-in/power-platform/admin/managed-environment-overview
+[4]: https://github.com/microsoft/PowerApps-Samples/tree/master/powershell/enterprisePolicies#7-set-subnet-injection-for-an-environment
