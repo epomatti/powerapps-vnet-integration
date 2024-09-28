@@ -5,3 +5,7 @@ output "server_fqdn" {
 output "server_id" {
   value = azurerm_mssql_server.default.id
 }
+
+output "database_name" {
+  value = azurerm_mssql_database.default.name
+}
