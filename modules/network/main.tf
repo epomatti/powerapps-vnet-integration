@@ -32,6 +32,13 @@ resource "azurerm_subnet" "powerapps" {
   }
 }
 
+resource "azurerm_subnet" "gateway" {
+  name                 = "gateway"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.default.name
+  address_prefixes     = ["10.0.20.0/24"]
+}
+
 resource "azurerm_virtual_network" "vnet2" {
   name                = "vnet2-${var.workload}"
   address_space       = ["10.99.0.0/16"]

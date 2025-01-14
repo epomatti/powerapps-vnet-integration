@@ -61,3 +61,29 @@ variable "entraid_sqldeveloper_user_password" {
   type      = string
   sensitive = true
 }
+
+### Gateway ###
+variable "create_gateway" {
+  type    = bool
+  default = false
+}
+
+variable "gateway_size" {
+  type = string
+}
+
+variable "gateway_publisher" {
+  type = string
+}
+
+variable "gateway_offer" {
+  type = string
+}
+
+variable "gateway_sku" {
+  type = string
+}
+
+variable "gateway_version" {
+  type = string
+}

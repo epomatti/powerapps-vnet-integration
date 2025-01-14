@@ -2,19 +2,19 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.3.0"
+      version = "4.15.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "3.0.1"
+      version = "3.0.2"
     }
     power-platform = {
       source  = "microsoft/power-platform"
-      version = "3.0.0"
+      version = "3.3.0"
     }
     azapi = {
       source  = "Azure/azapi"
-      version = "1.15.0"
+      version = "2.2.0"
     }
   }
 }
@@ -93,4 +93,19 @@ module "enterprise_policy" {
 
 module "entra" {
   source = "./modules/entra"
+}
+
+module "gateway" {
+  count               = var.create_gateway ? 1 : 0
+  source              = "./modules/gateway"
+  workload            = local.workload
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+  subnet_id           = module.network.gateway_subnet_id
+
+  gateway_size      = var.gateway_size
+  gateway_publisher = var.gateway_publisher
+  gateway_offer     = var.gateway_offer
+  gateway_sku       = var.gateway_sku
+  gateway_version   = var.gateway_version
 }

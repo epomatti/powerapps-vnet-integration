@@ -17,3 +17,11 @@ powerplatform_environment_location = "unitedstates"
 
 entraid_tenant_domain              = ""
 entraid_sqldeveloper_user_password = "P4ssw0rd!2023"
+
+
+create_gateway    = false
+gateway_size      = "Standard_D2_v3"
+gateway_publisher = "MicrosoftWindowsServer"
+gateway_offer     = "WindowsServer"
+gateway_sku       = "2025-datacenter-g2"
+gateway_version   = "latest"
