@@ -73,6 +73,25 @@ module "mssql" {
   azuread_authentication_only   = var.mssql_azuread_authentication_only
 }
 
+### MSSQL Private Endpoints ###
+module "private_link_primary_site" {
+  source                      = "./modules/private-link"
+  resource_group_name         = azurerm_resource_group.primary.name
+  location                    = azurerm_resource_group.primary.location
+  vnet_id                     = module.network_primary_site.vnet_id
+  private_endpoints_subnet_id = module.network_primary_site.private_endpoints_subnet_id
+  sql_server_id               = module.mssql.server_id
+}
+
+module "private_link_secondary_site" {
+  source                      = "./modules/private-link"
+  resource_group_name         = azurerm_resource_group.secondary.name
+  location                    = azurerm_resource_group.secondary.location
+  vnet_id                     = module.network_secondary_site.vnet_id
+  private_endpoints_subnet_id = module.network_secondary_site.private_endpoints_subnet_id
+  sql_server_id               = module.mssql.server_id
+}
+
 # module "nat" {
 #   source              = "./modules/nat"
 #   workload            = local.workload
@@ -89,14 +108,7 @@ module "mssql" {
 
 
 
-# module "private_link" {
-#   source                      = "./modules/private-link"
-#   resource_group_name         = azurerm_resource_group.default.name
-#   location                    = azurerm_resource_group.default.location
-#   vnet_id                     = module.network.vnet_id
-#   private_endpoints_subnet_id = module.network.private_endpoints_subnet_id
-#   sql_server_id               = module.mssql.server_id
-# }
+
 
 # module "enterprise_policy" {
 #   source                 = "./modules/policy"

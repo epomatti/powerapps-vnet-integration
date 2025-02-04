@@ -1,17 +1,19 @@
-# Power Apps VNET integration with Azure
+# Power Apps VNET integration
 
 Accessing Azure SQL Server from Power Apps with [VNET support][1] without the requirement for a gateway.
 
 <img src=".assets/azure-powerapps-vnet.png" />
 
-## Requirements
+## Infrastructure
+
+### Requirements
 
 - Power Apps license (E.g.: Power Apps Premium)
 - Use [managed environments][1]. Make sure to enable it after the environment creation.
 
 Follow the steps in the [setup guidelines][2], such as registering the `Microsoft.PowerPlatform` provider.
 
-## Infrastructure
+### Deployment
 
 Identify the IP address that will be administering the resources:
 

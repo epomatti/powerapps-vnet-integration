@@ -14,9 +14,12 @@
         "osdisk",
         "powerapps",
         "powerplatform",
+        "privatelink",
         "sqldb",
         "sqls",
-        "vnet"
+        "subresource",
+        "vnet",
+        "westus"
     ],
     "ignoreWords": [],
     "import": []
