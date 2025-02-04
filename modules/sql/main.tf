@@ -24,8 +24,6 @@ resource "azurerm_mssql_server" "default" {
     object_id                   = data.azurerm_client_config.current.object_id
     tenant_id                   = data.azurerm_client_config.current.tenant_id
   }
-
-  # depends_on = [azurerm_role_assignment.key]
 }
 
 resource "azurerm_mssql_database" "default" {

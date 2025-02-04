@@ -57,6 +57,22 @@ module "network_secondary_site" {
   cidr_prefix         = var.secondary_vnet_cidr_prefix
 }
 
+### Database ###
+module "mssql" {
+  source              = "./modules/sql"
+  workload            = local.workload
+  resource_group_name = azurerm_resource_group.primary.name
+  location            = azurerm_resource_group.primary.location
+
+  allowed_public_ips            = var.allowed_public_ips
+  sku                           = var.mssql_sku
+  max_size_gb                   = var.mssql_max_size_gb
+  public_network_access_enabled = var.mssql_public_network_access_enabled
+  admin_login                   = var.mssql_admin_login
+  admin_login_password          = var.mssql_admin_login_password
+  azuread_authentication_only   = var.mssql_azuread_authentication_only
+}
+
 # module "nat" {
 #   source              = "./modules/nat"
 #   workload            = local.workload
@@ -71,20 +87,7 @@ module "network_secondary_site" {
 #   location            = azurerm_resource_group.default.location
 # }
 
-# module "mssql" {
-#   source              = "./modules/sql"
-#   workload            = local.workload
-#   resource_group_name = azurerm_resource_group.default.name
-#   location            = azurerm_resource_group.default.location
 
-#   allowed_public_ips            = var.allowed_public_ips
-#   sku                           = var.mssql_sku
-#   max_size_gb                   = var.mssql_max_size_gb
-#   public_network_access_enabled = var.mssql_public_network_access_enabled
-#   admin_login                   = var.mssql_admin_login
-#   admin_login_password          = var.mssql_admin_login_password
-#   azuread_authentication_only   = var.mssql_azuread_authentication_only
-# }
 
 # module "private_link" {
 #   source                      = "./modules/private-link"
