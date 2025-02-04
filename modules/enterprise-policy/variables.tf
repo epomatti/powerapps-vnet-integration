@@ -10,18 +10,18 @@ variable "workload" {
   type = string
 }
 
-variable "vnet_id" {
+variable "primary_vnet_id" {
   type = string
 }
 
-variable "powerapps_subnet_name" {
+variable "secondary_vnet_id" {
   type = string
 }
 
-variable "vnet2_id" {
+variable "primary_subnet_name" {
   type = string
 }
 
-variable "powerapps_subnet2_name" {
+variable "secondary_subnet_name" {
   type = string
 }

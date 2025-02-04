@@ -96,6 +96,18 @@ module "private_link_secondary_site" {
   sql_server_id               = module.mssql.server_id
 }
 
+module "enterprise_policy" {
+  count                 = var.create_powerapps_enterprise_policy ? 1 : 0
+  source                = "./modules/enterprise-policy"
+  workload              = local.workload
+  resource_group_id     = azurerm_resource_group.primary.id
+  powerapps_location    = var.powerplatform_environment_location
+  primary_vnet_id       = module.network_primary_site.vnet_id
+  secondary_vnet_id     = module.network_secondary_site.vnet_id
+  primary_subnet_name   = module.network_primary_site.powerapps_subnet_name
+  secondary_subnet_name = module.network_secondary_site.powerapps_subnet_name
+}
+
 # module "nat" {
 #   source              = "./modules/nat"
 #   workload            = local.workload
@@ -114,16 +126,7 @@ module "private_link_secondary_site" {
 
 
 
-# module "enterprise_policy" {
-#   source                 = "./modules/policy"
-#   workload               = local.workload
-#   resource_group_id      = azurerm_resource_group.default.id
-#   powerapps_location     = var.powerplatform_environment_location
-#   vnet_id                = module.network.vnet_id
-#   powerapps_subnet_name  = module.network.powerapps_subnet_name
-#   vnet2_id               = module.network.vnet2_id
-#   powerapps_subnet2_name = module.network.powerapps_subnet2_name
-# }
+
 
 
 # module "gateway" {

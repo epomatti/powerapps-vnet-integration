@@ -13,22 +13,22 @@ resource "azapi_resource" "network_injection_enterprise_policy" {
   parent_id = var.resource_group_id
 
   # https://github.com/Azure/bicep-types-az/issues/2251
-  schema_validation_enabled = false
+  # schema_validation_enabled = false
 
   body = jsonencode({
     "properties" : {
       "networkInjection" : {
         "virtualNetworks" : [
           {
-            "id" : "${var.vnet_id}",
+            "id" : "${var.primary_vnet_id}",
             "subnet" : {
-              "name" : "${var.powerapps_subnet_name}"
+              "name" : "${var.primary_subnet_name}"
             }
           },
           {
-            "id" : "${var.vnet2_id}",
+            "id" : "${var.secondary_vnet_id}",
             "subnet" : {
-              "name" : "${var.powerapps_subnet2_name}"
+              "name" : "${var.secondary_subnet_name}"
             }
           }
         ]
