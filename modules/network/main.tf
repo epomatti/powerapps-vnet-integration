@@ -1,6 +1,6 @@
 resource "azurerm_virtual_network" "default" {
   name                = "vnet-${var.workload}"
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["${var.cidr_prefix}.0.0/16"]
   location            = var.location
   resource_group_name = var.resource_group_name
 }
@@ -9,62 +9,60 @@ resource "azurerm_subnet" "private_endpoints" {
   name                 = "private-endpoints"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.10.0/24"]
+  address_prefixes     = ["${var.cidr_prefix}.10.0/24"]
 }
 
 resource "azurerm_subnet" "powerapps" {
-  name                 = "powerapps"
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.50.0/24"]
-
+  name                                          = "powerapps"
+  resource_group_name                           = var.resource_group_name
+  virtual_network_name                          = azurerm_virtual_network.default.name
+  address_prefixes                              = ["${var.cidr_prefix}.20.0/24"]
   private_link_service_network_policies_enabled = true
 
   delegation {
     name = "Microsoft.PowerPlatform/enterprisePolicies"
-
     service_delegation {
+      name = "Microsoft.PowerPlatform/enterprisePolicies"
       actions = [
         "Microsoft.Network/virtualNetworks/subnets/join/action",
       ]
-      name = "Microsoft.PowerPlatform/enterprisePolicies"
     }
   }
 }
 
 resource "azurerm_subnet" "gateway" {
-  name                 = "gateway"
+  name                 = "data-gateway"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.20.0/24"]
+  address_prefixes     = ["${var.cidr_prefix}.30.0/24"]
 }
 
-resource "azurerm_virtual_network" "vnet2" {
-  name                = "vnet2-${var.workload}"
-  address_space       = ["10.99.0.0/16"]
-  location            = var.pair_location
-  resource_group_name = var.resource_group_name
-}
+# resource "azurerm_virtual_network" "vnet2" {
+#   name                = "vnet2-${var.workload}"
+#   address_space       = ["10.99.0.0/16"]
+#   location            = var.pair_location
+#   resource_group_name = var.resource_group_name
+# }
 
-resource "azurerm_subnet" "powerapps2" {
-  name                 = "powerapps"
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet2.name
-  address_prefixes     = ["10.99.50.0/24"]
+# resource "azurerm_subnet" "powerapps2" {
+#   name                 = "powerapps"
+#   resource_group_name  = var.resource_group_name
+#   virtual_network_name = azurerm_virtual_network.vnet2.name
+#   address_prefixes     = ["10.99.50.0/24"]
 
-  private_link_service_network_policies_enabled = true
+#   private_link_service_network_policies_enabled = true
 
-  delegation {
-    name = "Microsoft.PowerPlatform/enterprisePolicies"
+#   delegation {
+#     name = "Microsoft.PowerPlatform/enterprisePolicies"
 
-    service_delegation {
-      actions = [
-        "Microsoft.Network/virtualNetworks/subnets/join/action",
-      ]
-      name = "Microsoft.PowerPlatform/enterprisePolicies"
-    }
-  }
-}
+#     service_delegation {
+#       actions = [
+#         "Microsoft.Network/virtualNetworks/subnets/join/action",
+#       ]
+#       name = "Microsoft.PowerPlatform/enterprisePolicies"
+#     }
+#   }
+# }
 
 # resource "azurerm_network_security_group" "default" {
 #   name                = "nsg-${var.workload}"

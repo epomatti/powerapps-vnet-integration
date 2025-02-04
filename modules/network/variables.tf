@@ -6,10 +6,10 @@ variable "location" {
   type = string
 }
 
-variable "pair_location" {
+variable "resource_group_name" {
   type = string
 }
 
-variable "resource_group_name" {
+variable "cidr_prefix" {
   type = string
 }

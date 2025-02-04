@@ -2,7 +2,7 @@
 
 Accessing Azure SQL Server from Power Apps with [VNET support][1] without the requirement for a gateway.
 
-<img src=".docs/azure-powerapps-vnet.png" />
+<img src=".assets/azure-powerapps-vnet.png" />
 
 ## Requirements
 
@@ -22,7 +22,7 @@ curl ifconfig.me
 Create the `.auto.tfvars` file:
 
 ```sh
-cp config/template.tfvars .auto.tfvars
+cp config/local.auto.tfvars .auto.tfvars
 ```
 
 Set the required variables:

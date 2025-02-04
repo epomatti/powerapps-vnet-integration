@@ -1,12 +1,13 @@
+### General ###
 variable "subscription_id" {
   type = string
 }
 
-variable "location" {
+variable "primary_location" {
   type = string
 }
 
-variable "pair_location" {
+variable "secondary_location" {
   type = string
 }
 
@@ -18,6 +19,16 @@ variable "allowed_public_ips" {
   type = list(string)
 }
 
+### Virtual Networks ###
+variable "primary_vnet_cidr_prefix" {
+  type = string
+}
+
+variable "secondary_vnet_cidr_prefix" {
+  type = string
+}
+
+### Database ###
 variable "mssql_sku" {
   type = string
 }
@@ -43,6 +54,11 @@ variable "mssql_azuread_authentication_only" {
 }
 
 ### Power Apps ###
+variable "create_powerapps_enterprise_policy" {
+  type    = bool
+  default = false
+}
+
 variable "create_powerapps_environment" {
   type    = bool
   default = false

@@ -13,12 +13,13 @@ mssql_admin_login_password          = "P4ssw0rd!2023"
 mssql_azuread_authentication_only   = false
 
 create_powerapps_environment       = false
+create_powerapps_enterprise_policy = false
 powerplatform_environment_location = "unitedstates"
 
 entraid_tenant_domain              = ""
 entraid_sqldeveloper_user_password = "P4ssw0rd!2023"
 
-
+# Data Gateway
 create_gateway    = false
 gateway_size      = "Standard_D2_v3"
 gateway_publisher = "MicrosoftWindowsServer"
