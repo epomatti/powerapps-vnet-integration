@@ -98,7 +98,7 @@ module "private_link_secondary_site" {
 
 module "enterprise_policy" {
   count                 = var.create_powerapps_enterprise_policy ? 1 : 0
-  source                = "./modules/enterprise-policy"
+  source                = "./modules/powerapps/enterprise-policy"
   workload              = local.workload
   resource_group_id     = azurerm_resource_group.primary.id
   powerapps_location    = var.powerplatform_environment_location
