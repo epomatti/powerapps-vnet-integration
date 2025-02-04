@@ -74,6 +74,10 @@ module "mssql" {
 }
 
 ### MSSQL Private Endpoints ###
+module "entra" {
+  source = "./modules/entra"
+}
+
 module "private_link_primary_site" {
   source                      = "./modules/private-link"
   resource_group_name         = azurerm_resource_group.primary.name
@@ -121,9 +125,6 @@ module "private_link_secondary_site" {
 #   powerapps_subnet2_name = module.network.powerapps_subnet2_name
 # }
 
-# module "entra" {
-#   source = "./modules/entra"
-# }
 
 # module "gateway" {
 #   count               = var.create_gateway ? 1 : 0

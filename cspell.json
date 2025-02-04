@@ -9,6 +9,7 @@
         "azureuser",
         "datacenter",
         "entra",
+        "entraid",
         "hashicorp",
         "mssql",
         "osdisk",
