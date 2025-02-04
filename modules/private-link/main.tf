@@ -4,7 +4,7 @@ resource "azurerm_private_dns_zone" "sql_server" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "sql_server" {
-  name                  = "sqlserver-link"
+  name                  = "sqlserver-link-${var.site_affix}"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.sql_server.name
   virtual_network_id    = var.vnet_id
@@ -12,7 +12,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "sql_server" {
 }
 
 resource "azurerm_private_endpoint" "sql_server" {
-  name                = "pe-sqlserver"
+  name                = "pe-sqlserver-${var.site_affix}"
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.private_endpoints_subnet_id
@@ -25,7 +25,7 @@ resource "azurerm_private_endpoint" "sql_server" {
   }
 
   private_service_connection {
-    name                           = "sql-server"
+    name                           = "sql-server-${var.site_affix}"
     private_connection_resource_id = var.sql_server_id
     is_manual_connection           = false
     subresource_names              = ["sqlServer"]

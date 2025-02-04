@@ -6,6 +6,10 @@ variable "location" {
   type = string
 }
 
+variable "site_affix" {
+  type = string
+}
+
 variable "vnet_id" {
   type = string
 }

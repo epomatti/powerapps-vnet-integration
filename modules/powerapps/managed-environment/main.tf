@@ -1,14 +1,37 @@
-# terraform {
-#   required_providers {
-#     powerplatform = {
-#       source = "microsoft/power-platform"
-#     }
-#   }
-# }
+terraform {
+  required_providers {
+    powerplatform = {
+      source = "microsoft/power-platform"
+    }
+  }
+}
 
 # provider "powerplatform" {
 #   use_cli = true
 # }
+
+# provider "azurerm" {
+#   features {}
+#   use_cli = true
+# }
+
+data "azurerm_client_config" "current" {
+}
+
+locals {
+  current_subscription_id = data.azurerm_client_config.current.subscription_id
+}
+
+resource "powerplatform_billing_policy" "default" {
+  name     = "PayAsYouGoBillingPolicy"
+  location = var.powerapps_location
+  status   = "Enabled"
+
+  billing_instrument = {
+    resource_group  = var.primary_resource_group_name
+    subscription_id = local.current_subscription_id
+  }
+}
 
 # resource "powerplatform_environment" "sandbox" {
 #   display_name     = "AzureSandbox"

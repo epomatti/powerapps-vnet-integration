@@ -73,7 +73,7 @@ module "mssql" {
   azuread_authentication_only   = var.mssql_azuread_authentication_only
 }
 
-### MSSQL Private Endpoints ###
+### Private Endpoints ###
 module "entra" {
   source = "./modules/entra"
 }
@@ -82,6 +82,7 @@ module "private_link_primary_site" {
   source                      = "./modules/private-link"
   resource_group_name         = azurerm_resource_group.primary.name
   location                    = azurerm_resource_group.primary.location
+  site_affix                  = "primary"
   vnet_id                     = module.network_primary_site.vnet_id
   private_endpoints_subnet_id = module.network_primary_site.private_endpoints_subnet_id
   sql_server_id               = module.mssql.server_id
@@ -91,11 +92,13 @@ module "private_link_secondary_site" {
   source                      = "./modules/private-link"
   resource_group_name         = azurerm_resource_group.secondary.name
   location                    = azurerm_resource_group.secondary.location
+  site_affix                  = "secondary"
   vnet_id                     = module.network_secondary_site.vnet_id
   private_endpoints_subnet_id = module.network_secondary_site.private_endpoints_subnet_id
   sql_server_id               = module.mssql.server_id
 }
 
+### Power Apps ###
 module "enterprise_policy" {
   count                 = var.create_powerapps_enterprise_policy ? 1 : 0
   source                = "./modules/powerapps/enterprise-policy"
@@ -107,6 +110,13 @@ module "enterprise_policy" {
   primary_subnet_name   = module.network_primary_site.powerapps_subnet_name
   secondary_subnet_name = module.network_secondary_site.powerapps_subnet_name
 }
+
+# module "powerapps_managed_environment" {
+#   count                       = var.create_powerapps_environment ? 1 : 0
+#   source                      = "./modules/powerapps/managed-environment"
+#   primary_resource_group_name = azurerm_resource_group.primary.name
+#   powerapps_location          = var.powerplatform_environment_location
+# }
 
 # module "nat" {
 #   source              = "./modules/nat"
