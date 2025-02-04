@@ -2,7 +2,7 @@
 
 Accessing Azure SQL Server from Power Apps with [VNET support][1] without the requirement for a gateway.
 
-<img src=".docs/azure-powerapps.png" />
+<img src=".docs/azure-powerapps-vnet.png" />
 
 ## Requirements
 
