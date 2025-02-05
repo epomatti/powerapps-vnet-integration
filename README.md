@@ -12,7 +12,7 @@ Enabling private network RFC 1918 connectivity from Power Apps managed environme
 > A license that allows that enables self-service sign-up and managed environments is required.
 
 - A Power Apps license (E.g.: Power Apps Premium, Power Apps Developer). 
-- Use [managed environments][1]. Make sure to enable it after the environment creation.
+- Use [managed environments][2]. Make sure to enable it after the environment creation.
 - Azure subscription with `Microsoft.PowerPlatform` provider enabled.
 
 ### Deployment
@@ -121,3 +121,6 @@ Destroy the Azure resources:
 ```sh
 terraform destroy -auto-approve
 ```
+
+[1]: https://learn.microsoft.com/en-in/power-platform/admin/vnet-support-setup-configure
+[2]: https://learn.microsoft.com/en-in/power-platform/admin/managed-environment-overview
