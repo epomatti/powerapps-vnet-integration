@@ -111,7 +111,7 @@ Quick links to relevant Microsoft documents:
 Remove the subnet injection:
 
 ```ps1
-pwsh -executionpolicy bypass -file RevertSubnetInjection.ps1.ps1
+pwsh -executionpolicy bypass -file .\RevertSubnetInjection.ps1
 ```
 
 You should now be able to delete the Power App managed environment.
