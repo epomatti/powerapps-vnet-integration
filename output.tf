@@ -10,9 +10,9 @@ output "powerapps_sqlservice_service_principal_display_name" {
   value = module.entra.powerapps_sqlservice_service_principal_display_name
 }
 
-output "powerapps_enterprise_policy_resource_id" {
-  value = var.create_powerapps_enterprise_policy ? module.enterprise_policy.policy_resource_id : null
-}
+# output "powerapps_enterprise_policy_resource_id" {
+#   value = var.create_powerapps_enterprise_policy ? module.enterprise_policy.policy_resource_id : null
+# }
 
 # output "gateway_public_ip_address" {
 #   value = var.create_gateway == true ? module.gateway.public_ip_address : null
