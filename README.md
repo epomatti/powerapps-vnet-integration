@@ -86,23 +86,38 @@ pwsh -executionpolicy bypass -file .\NewSubnetInjection.ps1
 
 Retrieve the registration status of the enterprise policy to the environment:
 
+> [!NOTE]
+> It might take some time until the connectivity is functional and usable when connecting to data from Power Apps.
+
 ```ps1
 pwsh -executionpolicy bypass -file GetSubnetInjectionEnterprisePolicyForEnvironment.ps1
 ```
 
+Check the environment history to confirm the change was successful:
+
+<img src=".assets/azure-powerapps-policy-succeeded.png" width=700 />
+
+## Reference documentation
+
+Quick links to relevant Microsoft documents:
+
+- [Set up Virtual Network support for Power Platform](https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-setup-configure)
+- [Virtual Network support overview](https://learn.microsoft.com/en-in/power-platform/admin/vnet-support-overview)
+- [7. Set Subnet Injection for an environment](https://github.com/microsoft/PowerApps-Samples/tree/master/powershell/enterprisePolicies#7-set-subnet-injection-for-an-environment)
+- [Managed Environments overview](https://learn.microsoft.com/en-in/power-platform/admin/managed-environment-overview)
+
+## 🧹 Clean-up
+
+Remove the subnet injection:
+
+```ps1
+pwsh -executionpolicy bypass -file RevertSubnetInjection.ps1.ps1
 ```
 
-https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-setup-configure
+You should now be able to delete the Power App managed environment.
 
-https://learn.microsoft.com/en-us/power-platform/admin/vnet-support-setup-configure#configure-your-power-platform-environment
+Destroy the Azure resources:
 
-
-Follow the configuration steps described at [Set up Virtual Network support for Power Platform][1].
-
-Among the required configuration steps, the [7. Set Subnet Injection for an environment][4] configuration is essential.
-
-
-[1]: https://learn.microsoft.com/en-in/power-platform/admin/vnet-support-overview
-[2]: https://learn.microsoft.com/en-in/power-platform/admin/vnet-support-setup-configure
-[3]: https://learn.microsoft.com/en-in/power-platform/admin/managed-environment-overview
-[4]: https://github.com/microsoft/PowerApps-Samples/tree/master/powershell/enterprisePolicies#7-set-subnet-injection-for-an-environment
+```sh
+terraform destroy -auto-approve
+```
