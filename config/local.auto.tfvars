@@ -28,9 +28,12 @@ entraid_tenant_domain              = "<ENTRA ID DOMAIN>"
 entraid_sqldeveloper_user_password = "P4ssw0rd!2023"
 
 # Data Gateway
-create_gateway    = false
-gateway_size      = "Standard_D2_v3"
-gateway_publisher = "MicrosoftWindowsServer"
-gateway_offer     = "WindowsServer"
-gateway_sku       = "2025-datacenter-g2"
-gateway_version   = "latest"
+create_onprem_data_gateway = false
+create_nat_gateway         = false
+gateway_admin_username     = "azureuser"
+gateway_admin_password     = "P4ssw0rd!2023"
+gateway_size               = "Standard_B8ls_v2"
+gateway_publisher          = "MicrosoftWindowsServer"
+gateway_offer              = "WindowsServer"
+gateway_sku                = "2025-datacenter-g2"
+gateway_version            = "latest"
