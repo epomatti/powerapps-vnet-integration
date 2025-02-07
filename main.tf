@@ -42,19 +42,21 @@ resource "azurerm_resource_group" "secondary" {
 
 ### Networking ###
 module "network_primary_site" {
-  source              = "./modules/network"
-  workload            = local.workload
-  resource_group_name = azurerm_resource_group.primary.name
-  location            = azurerm_resource_group.primary.location
-  cidr_prefix         = var.primary_vnet_cidr_prefix
+  source                     = "./modules/network"
+  workload                   = local.workload
+  resource_group_name        = azurerm_resource_group.primary.name
+  location                   = azurerm_resource_group.primary.location
+  cidr_prefix                = var.primary_vnet_cidr_prefix
+  gateway_allowed_public_ips = var.allowed_public_ips
 }
 
 module "network_secondary_site" {
-  source              = "./modules/network"
-  workload            = local.workload
-  resource_group_name = azurerm_resource_group.secondary.name
-  location            = azurerm_resource_group.secondary.location
-  cidr_prefix         = var.secondary_vnet_cidr_prefix
+  source                     = "./modules/network"
+  workload                   = local.workload
+  resource_group_name        = azurerm_resource_group.secondary.name
+  location                   = azurerm_resource_group.secondary.location
+  cidr_prefix                = var.secondary_vnet_cidr_prefix
+  gateway_allowed_public_ips = var.allowed_public_ips
 }
 
 ### Database ###
@@ -111,6 +113,22 @@ module "enterprise_policy" {
   secondary_subnet_name = module.network_secondary_site.powerapps_subnet_name
 }
 
+module "gateway" {
+  count               = var.create_gateway ? 1 : 0
+  source              = "./modules/gateway"
+  workload            = local.workload
+  resource_group_name = azurerm_resource_group.primary.name
+  location            = azurerm_resource_group.primary.location
+  subnet_id           = module.network_primary_site.gateway_subnet_id
+
+  gateway_size      = var.gateway_size
+  gateway_publisher = var.gateway_publisher
+  gateway_offer     = var.gateway_offer
+  gateway_sku       = var.gateway_sku
+  gateway_version   = var.gateway_version
+}
+
+
 # module "powerapps_managed_environment" {
 #   count                       = var.create_powerapps_environment ? 1 : 0
 #   source                      = "./modules/powerapps/managed-environment"
@@ -139,17 +157,3 @@ module "enterprise_policy" {
 
 
 
-# module "gateway" {
-#   count               = var.create_gateway ? 1 : 0
-#   source              = "./modules/gateway"
-#   workload            = local.workload
-#   resource_group_name = azurerm_resource_group.default.name
-#   location            = azurerm_resource_group.default.location
-#   subnet_id           = module.network.gateway_subnet_id
-
-#   gateway_size      = var.gateway_size
-#   gateway_publisher = var.gateway_publisher
-#   gateway_offer     = var.gateway_offer
-#   gateway_sku       = var.gateway_sku
-#   gateway_version   = var.gateway_version
-# }

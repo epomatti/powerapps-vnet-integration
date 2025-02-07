@@ -16,6 +16,7 @@
         "hashicorp",
         "litware",
         "mssql",
+        "onprem",
         "osdisk",
         "powerapps",
         "powerplatform",

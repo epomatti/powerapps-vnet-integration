@@ -55,13 +55,11 @@ variable "mssql_azuread_authentication_only" {
 
 ### Power Apps ###
 variable "create_powerapps_enterprise_policy" {
-  type    = bool
-  default = false
+  type = bool
 }
 
 variable "create_powerapps_environment" {
-  type    = bool
-  default = false
+  type = bool
 }
 
 variable "powerplatform_environment_location" {
@@ -74,14 +72,12 @@ variable "entraid_tenant_domain" {
 }
 
 variable "entraid_sqldeveloper_user_password" {
-  type      = string
-  sensitive = true
+  type = string
 }
 
-### Gateway ###
+### On-Premises Data Gateway ###
 variable "create_gateway" {
-  type    = bool
-  default = false
+  type = bool
 }
 
 variable "gateway_size" {

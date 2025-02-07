@@ -37,68 +37,28 @@ resource "azurerm_subnet" "gateway" {
   address_prefixes     = ["${var.cidr_prefix}.30.0/24"]
 }
 
-# resource "azurerm_virtual_network" "vnet2" {
-#   name                = "vnet2-${var.workload}"
-#   address_space       = ["10.99.0.0/16"]
-#   location            = var.pair_location
-#   resource_group_name = var.resource_group_name
-# }
+### On-Premises Data Gateway ###
+resource "azurerm_network_security_group" "gateway" {
+  name                = "nsg-${var.workload}-onprem-data-gateway"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
 
-# resource "azurerm_subnet" "powerapps2" {
-#   name                 = "powerapps"
-#   resource_group_name  = var.resource_group_name
-#   virtual_network_name = azurerm_virtual_network.vnet2.name
-#   address_prefixes     = ["10.99.50.0/24"]
+resource "azurerm_network_security_rule" "allow_gateway_inbound_rdp" {
+  name                        = "AllowInboundRDP"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefixes     = var.gateway_allowed_public_ips
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.gateway.name
+}
 
-#   private_link_service_network_policies_enabled = true
-
-#   delegation {
-#     name = "Microsoft.PowerPlatform/enterprisePolicies"
-
-#     service_delegation {
-#       actions = [
-#         "Microsoft.Network/virtualNetworks/subnets/join/action",
-#       ]
-#       name = "Microsoft.PowerPlatform/enterprisePolicies"
-#     }
-#   }
-# }
-
-# resource "azurerm_network_security_group" "default" {
-#   name                = "nsg-${var.workload}"
-#   location            = var.location
-#   resource_group_name = var.resource_group_name
-# }
-
-# resource "azurerm_network_security_rule" "allow_inbound_rdp" {
-#   name                        = "AllowInboundRDP"
-#   priority                    = 100
-#   direction                   = "Inbound"
-#   access                      = "Allow"
-#   protocol                    = "*"
-#   source_port_range           = "*"
-#   destination_port_range      = "3389"
-#   source_address_prefix       = "*"
-#   destination_address_prefix  = "*"
-#   resource_group_name         = var.resource_group_name
-#   network_security_group_name = azurerm_network_security_group.default.name
-# }
-
-# resource "azurerm_network_security_rule" "allow_outbound" {
-#   name                        = "BastionOutbound"
-#   priority                    = 100
-#   direction                   = "Outbound"
-#   access                      = "Allow"
-#   protocol                    = "*"
-#   source_port_range           = "*"
-#   destination_port_range      = "*"
-#   source_address_prefix       = "*"
-#   destination_address_prefix  = "*"
-#   resource_group_name         = var.resource_group_name
-#   network_security_group_name = azurerm_network_security_group.default.name
-# }
-
-# resource "azurerm_subnet_network_security_group_association" "default" {
-#   subnet_id                 = azurerm_subnet.default.id
-#   network_security_group_id = azurerm_network_security_group.default.id
-# }
+resource "azurerm_subnet_network_security_group_association" "gateway_allow_inbound_rdp" {
+  subnet_id                 = azurerm_subnet.gateway.id
+  network_security_group_id = azurerm_network_security_group.gateway.id
+}

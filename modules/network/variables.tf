@@ -13,3 +13,7 @@ variable "resource_group_name" {
 variable "cidr_prefix" {
   type = string
 }
+
+variable "gateway_allowed_public_ips" {
+  type = list(string)
+}
