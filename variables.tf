@@ -76,8 +76,21 @@ variable "entraid_sqldeveloper_user_password" {
 }
 
 ### On-Premises Data Gateway ###
-variable "create_gateway" {
+variable "create_onprem_data_gateway" {
   type = bool
+}
+
+variable "create_nat_gateway" {
+  type = bool
+}
+
+variable "gateway_admin_username" {
+  type = string
+}
+
+variable "gateway_admin_password" {
+  type      = string
+  sensitive = true
 }
 
 variable "gateway_size" {

@@ -25,8 +25,9 @@ resource "random_integer" "affix" {
 }
 
 locals {
-  affix    = random_integer.affix.result
-  workload = "${var.project}${local.affix}"
+  affix        = random_integer.affix.result
+  workload     = "${var.project}${local.affix}"
+  gateway_zone = "1"
 }
 
 ### Resource Groups ###
@@ -114,18 +115,33 @@ module "enterprise_policy" {
 }
 
 module "gateway" {
-  count               = var.create_gateway ? 1 : 0
-  source              = "./modules/gateway"
-  workload            = local.workload
-  resource_group_name = azurerm_resource_group.primary.name
-  location            = azurerm_resource_group.primary.location
-  subnet_id           = module.network_primary_site.gateway_subnet_id
+  count                  = var.create_onprem_data_gateway ? 1 : 0
+  source                 = "./modules/gateway"
+  workload               = local.workload
+  resource_group_name    = azurerm_resource_group.primary.name
+  location               = azurerm_resource_group.primary.location
+  subnet_id              = module.network_primary_site.gateway_subnet_id
+  zone                   = local.gateway_zone
+  gateway_admin_username = var.gateway_admin_username
+  gateway_admin_password = var.gateway_admin_password
 
   gateway_size      = var.gateway_size
   gateway_publisher = var.gateway_publisher
   gateway_offer     = var.gateway_offer
   gateway_sku       = var.gateway_sku
   gateway_version   = var.gateway_version
+}
+
+
+
+module "nat" {
+  count               = var.create_nat_gateway ? 1 : 0
+  source              = "./modules/nat"
+  workload            = local.workload
+  resource_group_name = azurerm_resource_group.primary.name
+  location            = azurerm_resource_group.primary.location
+  zone                = local.gateway_zone
+  gateway_subnet_id   = module.network_primary_site.gateway_subnet_id
 }
 
 
@@ -136,12 +152,7 @@ module "gateway" {
 #   powerapps_location          = var.powerplatform_environment_location
 # }
 
-# module "nat" {
-#   source              = "./modules/nat"
-#   workload            = local.workload
-#   resource_group_name = azurerm_resource_group.default.name
-#   location            = azurerm_resource_group.default.location
-# }
+
 
 # module "monitor" {
 #   source              = "./modules/monitor"

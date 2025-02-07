@@ -31,10 +31,14 @@ resource "azurerm_windows_virtual_machine" "default" {
   resource_group_name   = var.resource_group_name
   location              = var.location
   size                  = var.gateway_size
-  admin_username        = "azureuser"
-  admin_password        = "P@ssw0rd.123"
+  admin_username        = var.gateway_admin_username
+  admin_password        = var.gateway_admin_password
   network_interface_ids = [azurerm_network_interface.default.id]
-  secure_boot_enabled   = true
+  zone                  = var.zone
+
+  vtpm_enabled                      = true
+  secure_boot_enabled               = true
+  vm_agent_platform_updates_enabled = true
 
   os_disk {
     name                 = "osdisk-${local.name}"

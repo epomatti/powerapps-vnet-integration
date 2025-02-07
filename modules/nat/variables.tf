@@ -9,3 +9,11 @@ variable "location" {
 variable "workload" {
   type = string
 }
+
+variable "zone" {
+  type = string
+}
+
+variable "gateway_subnet_id" {
+  type = string
+}

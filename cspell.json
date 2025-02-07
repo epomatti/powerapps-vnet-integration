@@ -32,6 +32,7 @@
         "subresource",
         "unitedstates",
         "vnet",
+        "vtpm",
         "westus"
     ],
     "ignoreWords": [],
